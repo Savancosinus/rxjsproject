@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { interval, Observable, Subscription } from 'rxjs';
+import { interval, Observable, of, Subscription } from 'rxjs';
 import { map, mergeMap, take, takeUntil, tap } from 'rxjs/operators';
 import { ShadowComponent } from './../shadow/shadow.component';
 
@@ -13,6 +13,7 @@ export class DesincriptionComponent
   implements OnInit, OnDestroy
 {
   public souscription: Subscription = new Subscription();
+  public maValeurHTML$: Observable<number> = of();
 
   // Source de données
   public serveur: Observable<number> = interval(1000).pipe(take(1)); // Simulation de serveur: 1 valeur émise après 1000ms, puis notification de complete
@@ -61,6 +62,8 @@ export class DesincriptionComponent
         next: () => console.log(`HIGH-ORDER: Risque de flux infini!`),
       });
 
+    // Exemple 5: Pipe async, pas besoin de subscribe ni de unsubscribe/takeUntil
+    this.maValeurHTML$ = interval(1000).pipe(tap(console.log));
   */
   }
 
